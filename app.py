@@ -51,6 +51,7 @@ ADMIN_USER = 'admin'
 ADMIN_PASS = 'admin'
 TEACHER_USER = 'professor'
 TEACHER_PASS = 'Liceusospolitecnico'
+STUDENT_REGISTRATION_PASSWORD = 'NATALIA'
 
 
 def get_db_connection():
@@ -120,6 +121,10 @@ def create_aluno():
 
     if len(matricula) < 3 or len(matricula) > 50:
         return jsonify({'error': 'ID matrícula deve ter entre 3 e 50 caracteres.'}), 400
+
+    senha = payload.get('senha', '').strip()
+    if senha != STUDENT_REGISTRATION_PASSWORD:
+        return jsonify({'error': 'Senha de cadastro incorreta.'}), 401
 
     # Validar caracteres permitidos na matrícula (alphanuméricos e hífen)
     if not all(c.isalnum() or c == '-' for c in matricula):
@@ -247,6 +252,9 @@ def qrcode_image():
         buf.seek(0)
         return send_file(buf, mimetype='image/png', download_name=f'qrcode_{aluno["matricula"]}.png')
 
+
+# Inicializa o banco de dados ao iniciar a aplicação
+init_db()
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

@@ -29,10 +29,11 @@ studentForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('student-name').value.trim();
   const matricula = document.getElementById('student-matricula').value.trim();
+  const password = document.getElementById('student-password').value.trim();
 
   // Validação local
-  if (!name || !matricula) {
-    showMessage('Nome e ID Matrícula são obrigatórios.', false);
+  if (!name || !matricula || !password) {
+    showMessage('Nome, matrícula e senha são obrigatórios.', false);
     return;
   }
 
@@ -46,10 +47,15 @@ studentForm.addEventListener('submit', async (e) => {
     return;
   }
 
+  if (password !== 'NATALIA') {
+    showMessage('Senha incorreta. Use NATALIA.', false);
+    return;
+  }
+
   const res = await fetch('/api/alunos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nome: name, matricula })
+    body: JSON.stringify({ nome: name, matricula, senha: password })
   });
 
   const data = await res.json();
