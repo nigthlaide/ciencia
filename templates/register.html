@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Cadastro de Alunos - Presença QR</title>
+    
+    <!-- PWA & App Manifest -->
+    <link rel="manifest" href="/static/manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Presença QR" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%236366f1' width='180' height='180' rx='40'/><text x='90' y='90' font-size='100' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle'>QR</text></svg>" />
+    
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div>
+          <h1>Cadastro</h1>
+          <p>Cadastre novos alunos</p>
+        </div>
+        <nav class="nav-buttons">
+          <a href="/cadastro"><button>Cadastro</button></a>
+          <a href="/gerar"><button>Gerar QR</button></a>
+          <a href="/scanner"><button>Scanner</button></a>
+          <a href="/admin"><button>Admin</button></a>
+        </nav>
+      </header>
+
+      <main class="container">
+        <div class="card">
+          <h2>Cadastro de Alunos</h2>
+          <form id="student-form" class="form-group">
+            <label>Nome</label>
+            <input id="student-name" placeholder="Nome completo" />
+            <label>ID Matrícula</label>
+            <input id="student-matricula" placeholder="Ex: 2024001" />
+            <button type="submit" class="btn-primary">Cadastrar</button>
+            <p id="student-message" class="message"></p>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Alunos cadastrados</h2>
+          <div id="student-list" class="list"></div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/static/js/register.js"></script>
+  </body>
+</html>

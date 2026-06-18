@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.sqlite
+*.db
+*.log
+*.env
+*.zip
+ngrok.exe
+ngrok.zip
+/static/manifest.json
+.DS_Store
+.venv/

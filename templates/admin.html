@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Admin - Presença QR</title>
+    
+    <!-- PWA & App Manifest -->
+    <link rel="manifest" href="/static/manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Presença QR" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%236366f1' width='180' height='180' rx='40'/><text x='90' y='90' font-size='100' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle'>QR</text></svg>" />
+    
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div>
+          <h1>Admin</h1>
+          <p>Relatórios e gerenciamento</p>
+        </div>
+        <nav class="nav-buttons">
+          <a href="/cadastro"><button>Cadastro</button></a>
+          <a href="/gerar"><button>Gerar QR</button></a>
+          <a href="/scanner"><button>Scanner</button></a>
+          <a href="/admin"><button>Admin</button></a>
+        </nav>
+      </header>
+
+      <main class="container">
+        <div class="card login-card">
+          <h2>Login Admin</h2>
+          <form id="admin-login" class="form-group">
+            <label>Usuário</label>
+            <input id="admin-user" value="admin" />
+            <label>Senha</label>
+            <input id="admin-pass" type="password" value="admin" />
+            <button type="submit" class="btn-primary">Entrar</button>
+            <p id="admin-login-message" class="message"></p>
+          </form>
+        </div>
+        <div class="card">
+          <h2>Relatório de Presenças</h2>
+          <div id="attendance-report" class="list"></div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/static/js/admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Gerar QR - Presença QR</title>
+    
+    <!-- PWA & App Manifest -->
+    <link rel="manifest" href="/static/manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Presença QR" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%236366f1' width='180' height='180' rx='40'/><text x='90' y='90' font-size='100' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle'>QR</text></svg>" />
+    
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <style>
+      .student-selector-wrapper {
+        display: grid;
+        gap: 20px;
+      }
+
+      .student-card {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .student-card:hover {
+        border-color: #6366f1;
+        background: linear-gradient(135deg, #ede9fe 0%, #f3e8ff 100%);
+        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);
+      }
+
+      .student-card.active {
+        border-color: #6366f1;
+        background: linear-gradient(135deg, #ddd6fe 0%, #ede9fe 100%);
+        box-shadow: 0 12px 24px rgba(99, 102, 241, 0.3);
+      }
+
+      .student-card-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .student-info h3 {
+        margin: 0 0 4px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1f2937;
+      }
+
+      .student-info p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #6b7280;
+      }
+
+      .student-badge {
+        background: #6366f1;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .qr-section {
+        display: grid;
+        gap: 20px;
+      }
+
+      .qr-display {
+        background: white;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        display: none;
+      }
+
+      .qr-display.active {
+        display: block;
+      }
+
+      .qr-display img {
+        max-width: 240px;
+        max-height: 240px;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+      }
+
+      .qr-info {
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+      }
+
+      .qr-info strong {
+        color: #1f2937;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #6b7280;
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 12px;
+      }
+
+      @media (max-width: 768px) {
+        .student-card-content {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .button-group {
+          flex-direction: column;
+        }
+
+        .button-group button {
+          width: 100%;
+        }
+      }
+
+      /* Print Styles - Apenas QR Code */
+      @media print {
+        * {
+          margin: 0 !important;
+          padding: 0 !important;
+          background: none !important;
+          color: black !important;
+          box-shadow: none !important;
+          border: none !important;
+        }
+
+        html, body {
+          width: 100% !important;
+          height: 100% !important;
+          background: white !important;
+        }
+
+        .page {
+          padding: 0 !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+        }
+
+        .topbar,
+        .nav-buttons,
+        #students-container,
+        .qr-info,
+        .button-group,
+        h1, h2, p:not(#qr-student-name):not(#qr-student-id),
+        label,
+        input,
+        select,
+        button,
+        .container:first-child {
+          display: none !important;
+        }
+
+        .card {
+          padding: 0 !important;
+          box-shadow: none !important;
+          border: none !important;
+          background: white !important;
+          page-break-inside: avoid;
+        }
+
+        #qr-section {
+          display: block !important;
+          gap: 0 !important;
+        }
+
+        .qr-display {
+          display: block !important;
+          background: white !important;
+          border: none !important;
+          padding: 20px !important;
+          text-align: center !important;
+        }
+
+        .qr-display img {
+          width: 200px !important;
+          height: 200px !important;
+          max-width: 200px !important;
+          max-height: 200px !important;
+          margin: 0 auto 10px !important;
+          display: block !important;
+          box-shadow: none !important;
+          border-radius: 0 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div>
+          <h1>📱 Gerar QR Code</h1>
+          <p>Gere o QR único e permanente para cada aluno</p>
+        </div>
+        <nav class="nav-buttons">
+          <a href="/cadastro"><button>Cadastro</button></a>
+          <a href="/gerar"><button>Gerar QR</button></a>
+          <a href="/scanner"><button>Scanner</button></a>
+          <a href="/admin"><button>Admin</button></a>
+        </nav>
+      </header>
+
+      <main class="container">
+        <div class="card">
+          <h2>Selecionar Aluno</h2>
+          <div class="student-selector-wrapper" id="students-container">
+            <div class="empty-state">
+              <div class="empty-state-icon">⏳</div>
+              <p>Carregando alunos...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card qr-section" id="qr-section" style="display: none;">
+          <h2>QR Code Único</h2>
+          <div class="qr-display active" id="qr-display">
+            <div class="qr-info">
+              <p>QR Code de: <strong id="qr-student-name"></strong></p>
+              <p style="font-size: 0.85rem; margin-top: 8px; color: #9ca3af;">ID Matrícula: <strong id="qr-student-id"></strong></p>
+            </div>
+            <img id="qr-img" alt="QR Code" />
+            <div class="button-group">
+              <button id="print-qr" class="btn-primary">🖨️ Imprimir QR</button>
+              <button id="download-qr" class="btn-secondary">⬇️ Baixar QR</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/static/js/generate.js"></script>
+  </body>
+</html>

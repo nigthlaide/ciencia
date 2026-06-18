@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Scanner - Presença QR</title>
+    
+    <!-- PWA & App Manifest -->
+    <link rel="manifest" href="/static/manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Presença QR" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%236366f1' width='180' height='180' rx='40'/><text x='90' y='90' font-size='100' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle'>QR</text></svg>" />
+    
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div>
+          <h1>Scanner</h1>
+          <p>Login professor e registrar presença</p>
+        </div>
+        <nav class="nav-buttons">
+          <a href="/cadastro"><button>Cadastro</button></a>
+          <a href="/gerar"><button>Gerar QR</button></a>
+          <a href="/scanner"><button>Scanner</button></a>
+          <a href="/admin"><button>Admin</button></a>
+        </nav>
+      </header>
+
+      <main class="container">
+        <div id="login-section" class="card login-card">
+          <h2>Login Professor</h2>
+          <form id="teacher-login" class="form-group">
+            <label>Usuário</label>
+            <input id="teacher-user" value="professor" />
+            <label>Senha</label>
+            <input id="teacher-pass" type="password" value="Liceusospolitecnico" />
+            <button type="submit" class="btn-primary">Entrar</button>
+            <p id="teacher-login-message" class="message"></p>
+          </form>
+        </div>
+        <div id="scanner-section" class="card" style="display:none;">
+          <h2>Registrar Presença com QR Code</h2>
+          <div id="reader" style="width:100%;max-width:480px;margin:12px auto"></div>
+          <p id="scanner-message" class="message" style="text-align:center;margin-top:16px;"></p>
+          <div style="text-align:center;margin-top:16px;"><button id="scan-next" class="btn-primary" style="display:none;">Escanear próximo</button></div>
+          <div style="text-align:center;margin-top:8px;"><button id="stop-scanner" class="btn-secondary">Parar scanner</button></div>
+        </div>
+      </main>
+
+      <script src="https://unpkg.com/html5-qrcode"></script>
+      <script src="/static/js/scanner.js"></script>
+  </body>
+</html>
