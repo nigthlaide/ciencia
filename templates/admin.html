@@ -33,7 +33,7 @@
       </header>
 
       <main class="container">
-        <div class="card login-card">
+        <div class="card login-card" id="admin-login-card">
           <h2>Login Admin</h2>
           <form id="admin-login" class="form-group">
             <label>Usuário</label>
@@ -41,11 +41,13 @@
             <label>Senha</label>
             <input id="admin-pass" type="password" value="admin" />
             <button type="submit" class="btn-primary">Entrar</button>
+            <button id="admin-logout" type="button" class="btn-secondary" style="display: none; margin-top: 12px;">Sair</button>
             <p id="admin-login-message" class="message"></p>
           </form>
         </div>
-        <div class="card">
+        <div class="card" id="admin-report-card" style="display: none;">
           <h2>Relatório de Presenças</h2>
+          <p id="admin-status" class="message"></p>
           <div id="attendance-report" class="list"></div>
         </div>
       </main>
